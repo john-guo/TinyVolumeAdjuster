@@ -45,8 +45,9 @@ namespace InteractiveVision
                 {
                     if (!Directory.Exists(_path))
                         Directory.CreateDirectory(_path);
-                    string logPath = Path.Combine(_path, $"ErrorLog-{DateTime.Now:yyyyMMddHHmmss}.xml");
-                    string dmpPath = Path.Combine(_path, $"Crash-{DateTime.Now:yyyyMMddHHmmss}.dmp");
+                    var ts = $"{DateTime.Now:yyyyMMddHHmmss}";
+                    string logPath = Path.Combine(_path, $"ErrorLog-{ts}.xml");
+                    string dmpPath = Path.Combine(_path, $"Crash-{ts}.dmp");
                     File.AppendAllText(logPath, new SerializableException(ex).ToString(), Encoding.UTF8);
                     var client = new DiagnosticsClient(Environment.ProcessId);
                     client.WriteDump(DumpType.Normal, dmpPath);
